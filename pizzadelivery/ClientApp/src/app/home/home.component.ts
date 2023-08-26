@@ -90,10 +90,11 @@ export class HomeComponent {
     "value" : 50,
     "criteria" : {
       toppingQty : 4,
-      size : 'Extra Large',
+      size : 'Large',
       Qty : 1,
-      
+      toppingIncluded : ["Chicken","Pepperoni"]
     },
+
     "name" : "Offer 3"
   }]
   carts: any[] = []
@@ -156,10 +157,15 @@ export class HomeComponent {
     this.carts.forEach(item => {
       this.offers.forEach(offer => {
         const criteria = offer.criteria;
+         // Check if all required toppings are included in the item
+      const requiredToppingsIncluded = !criteria.toppingIncluded || criteria.toppingIncluded.length ==0 ? true :  criteria.toppingIncluded.every(topping => item.Toppings.includes(topping));
+
         if (
           item.Toppings.length >= criteria.toppingQty &&
           item.Size === criteria.size &&
-          item.Qty >= criteria.Qty
+          item.Qty >= criteria.Qty && 
+          requiredToppingsIncluded
+          
         ) {
           this.applyOffered.push(offer)
           if (offer.type === 'fixed') {

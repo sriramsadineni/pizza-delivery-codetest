@@ -1,6 +1,8 @@
 <div class="row">
   <div class="col-8">
-    <h3>Order</h3>
+    <h4 class="text-primary">
+      <i class="fa fa-pizza-slice">  </i> Pizza 
+    </h4>
     <table class="table table-bordered">
       <thead class="">
         <tr>
@@ -49,9 +51,11 @@
           </tr>
         </ng-container>
         <tr>
-          <td></td>
-          <th *ngFor="let s of Sizes" class="text-center">
-            <button class="btn btn-outline-primary" (click)="addCart(s)">Add Cart</button>
+          <td class="bg-light"></td>
+          <th *ngFor="let s of Sizes" class="text-center bg-light">
+            <button class="btn btn-light btn-sm" (click)="addCart(s)">
+              <i class="fa fa-cart-plus">  </i>
+              Add Cart</button>
           </th>
         </tr>
       </tbody>
@@ -59,7 +63,9 @@
   </div>
   
   <div class="col-4">
-    <h3>Cart</h3>
+    <h4 class="text-primary">
+      <i class="fa fa-shopping-cart">  </i> Cart 
+    </h4>
     <table class="table table-bordered" *ngIf="carts.length > 0">
       <thead class="">
         <tr>
@@ -124,7 +130,8 @@
         <tr>
           <td colspan="3">
             <button class="btn w-100 btn-primary">
-              Pay Now
+              <i class="fa fa-credit-card"></i>
+              Checkout
             </button>
           </td>
         </tr>
