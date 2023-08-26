@@ -1,0 +1,140 @@
+<div class="row">
+  <div class="col-8">
+    <h3>Order</h3>
+    <table class="table table-bordered">
+      <thead class="">
+        <tr>
+          <th rowspan="2" class="text-center align-middle bg-light" style="vertical-align: middle;">
+            Toppings
+          </th>
+          <th [attr.colspan]="Sizes.length" class="text-center bg-light">
+            Pizza size
+          </th>
+        </tr>
+        <tr>
+          <th *ngFor="let s of Sizes" class="text-center bg-light">
+            {{ s.Name }} (${{ s.Amount }})
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let s of gorups | keyvalue">
+          <tr>
+            <th class="bg-light" [attr.colspan]="1 + Sizes.length">
+              {{ s.key }}
+            </th>
+          </tr>
+          <tr *ngFor="let v of getToppings(s.key)">
+            <th class="text-center">{{ v.name }} (${{ v.amount }})</th>
+            <th *ngFor="let s of Sizes" class="text-center">
+              <div class="form-check d-inline-block">
+                <input
+                  class="form-check-input"
+                  [attr.data-topping]="v.name"
+                  [attr.data-size]="s.Name"
+                  type="checkbox"
+                  id="{{
+                    v.name.replace(' ', '-') + '-' + s.Name.replace(' ', '-')
+                  }}"
+                />
+                <label
+                  class="form-check-label"
+                  for="{{
+                    v.name.replace(' ', '-') + '-' + s.Name.replace(' ', '-')
+                  }}"
+                >
+                </label>
+              </div>
+            </th>
+          </tr>
+        </ng-container>
+        <tr>
+          <td></td>
+          <th *ngFor="let s of Sizes" class="text-center">
+            <button class="btn btn-outline-primary" (click)="addCart(s)">Add Cart</button>
+          </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div class="col-4">
+    <h3>Cart</h3>
+    <table class="table table-bordered" *ngIf="carts.length > 0">
+      <thead class="">
+        <tr>
+          <th class="bg-light">Description</th>
+          <th class="bg-light" style="width: 50px">Qty</th>
+          <th class="bg-light " style="width: 100px"> Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of carts; let i = index"  style="font-size: 14px;">
+          
+          <td>
+            <p class="mb-0">Size : {{ c.Size }}</p>
+            <p class="mb-0">Toppings : {{ c.Toppings.join(", ") }}</p>
+            <a
+              class="text-danger"
+              href="javascript:void(0)"
+              (click)="removeItem(i)"
+            >
+              remove
+            </a>
+          </td>
+          <td>
+            {{ c.Qty }}
+          </td>
+          <td>
+            {{ c.Amount | currency }}
+          </td>
+        </tr>
+        
+        <tr>
+          <td colspan="2">
+            <p class="mb-0">
+              Offer(s)
+            </p>
+            <p class="mb-0">
+              <span class="badge bg-light text-dark" *ngFor="let offer of applyOffered">
+                {{offer.name}} - {{offer.criteria.Qty}} {{offer.criteria.size}} / {{offer.criteria.toppingQty}} toppings
+              </span>
+            </p>
+
+          </td>
+          <td class="">
+            <button class="btn btn-sm btn-outline-warning" *ngIf="!applyOffered || applyOffered.length == 0" (click)="applyOffers()">Apply Offer(s)</button>
+            <button class="btn btn-sm btn-outline-warning" *ngIf="applyOffered.length > 0" (click)="removeOffers()">Remove Offer(s)</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="text-end fw-bold">Base Price</td>
+          <td class="bg-light fw-bold">{{ basePrice | currency }}</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="text-end fw-bold ">Total Discount</td>
+          <td class="bg-light fw-bold">{{ totalDiscount | currency }}</td>
+        </tr>
+        <tr>
+          <td colspan="2" class="text-end fw-bold bg-light">Total</td>
+          <td class="bg-light fw-bold">{{ total | currency  }}</td>
+        </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <td colspan="3">
+            <button class="btn w-100 btn-primary">
+              Pay Now
+            </button>
+          </td>
+        </tr>
+      </thead>
+    </table>
+    <div class="p-3 bg-light border text-center" *ngIf="carts.length == 0">
+      <span>
+        Empty Cart
+      </span>
+    </div>
+  </div>
+  
+</div>
