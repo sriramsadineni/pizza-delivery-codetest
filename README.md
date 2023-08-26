@@ -13,3 +13,5 @@ This command will start a local development server and compile the client app. O
 That's it! You've successfully set up and launched the client app.
 
 Remember that you can customize and enhance the app according to your needs. Enjoy coding!
+
+![image](https://github.com/sriramsadineni/pizza-delivery-codetest/assets/19425946/59db6465-3dda-43bf-a9c7-9a3b706d78bb)
